@@ -93,17 +93,17 @@ def do_analysis(frame):
                 print("Error: cannot start the thread")
 
     previousframe = cv2.cvtColor(tempframe, cv2.COLOR_BGR2GRAY)
+    return frame
 
 
 def image_get(window_name):
     cv2.namedWindow(window_name, flags=cv2.WINDOW_FREERATIO)
     while True:
-        frame = cap.read()
-        frame = cv2.resize(frame, (320, 240))
+        ret, frame = cap.read()
+        frame = do_analysis(frame)
         cv2.imshow(window_name, frame)
-        cv2.waitKey(1)
-        # key
-        do_analysis(frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
 
 
 def run():
